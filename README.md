@@ -61,40 +61,29 @@ Plant care tracking application that helps users manage their plants with custom
 - **Version Control Systems**
 
 ## 📁 Project Structure
-
 ```
 ist-durstig/
 ├── backend/                          # Spring Boot Backend
-│   ├── src/main/java/com/istdurstig/
-│   │   ├── controller/               # REST Controllers
-│   │   ├── dto/                      # Data Transfer Objects
-│   │   ├── factory/                  # Factory Classes
-│   │   ├── model/                    # Domain Models
-│   │   ├── repository/               # Data Access Layer
-│   │   ├── security/                 # Security Configuration
-│   │   └── service/                  # Business Logic Layer
-│   ├── src/main/resources/
-│   │   └── application.properties    # Spring Boot Configuration
-│   └── build.gradle                  # Gradle Build File
-├── src/                              # React Frontend
-│   ├── components/                   # Reusable Components
-│   ├── contexts/                     # React Contexts
-│   ├── pages/                        # Page Components
-│   ├── services/                     # API Services
-│   ├── types/                        # TypeScript Types
-│   └── App.tsx                       # Main App Component
-├── package.json                      # Frontend Dependencies
-└── README.md                         # This file
+│   ├── build.gradle                  # Gradle Build File and backend sources
+│   └── src/main/java/com/istdurstig/ # Java source code
+├── frontend/                         # React + TypeScript Frontend
+│   ├── package.json                  # Frontend dependencies and scripts
+│   ├── src/                          # React application source code
+│   └── vite.config.ts, tailwind.config.js, etc.
+├── LICENSE                           # Project license
+└── README.md                         # Project overview and instructions
 ```
 
 ## 🛠️ Available Scripts
 
 ### Backend (Gradle)
 ```bash
+# Set your MongoDB URI environment variable (replace with your credentials)
+# export MONGODB_URI="mongodb://<username>:<password>@cluster0.mongodb.net/istdurstig?retryWrites=true&w=majority"
 # Build the application
 ./gradlew build
 
-# Run the application
+# Run the application (ensure MONGODB_URI is set)
 ./gradlew bootRun
 
 # Run tests
@@ -106,6 +95,8 @@ ist-durstig/
 
 ### Frontend (npm)
 ```bash
+# Install dependencies
+npm install
 # Start development server
 npm run dev
 
