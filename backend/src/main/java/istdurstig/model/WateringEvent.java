@@ -15,4 +15,10 @@ public class WateringEvent extends CareEvent {
         super(CareEventType.WATERING, notes, userId);
         this.amountLiters = amountLiters;
     }
+
+    public String getSummary() {
+        return "Watered: "
+                + amountLiters + " L at " + getTimestamp()
+                + ". Notes: " + getNotes();
+    }
 }
