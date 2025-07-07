@@ -36,41 +36,42 @@ Plant care tracking application that helps users manage their plants with custom
 - **Java Development Kit (JDK) 17 or higher**
 - **Node.js 18+ and npm**
 - **MongoDB 6.0+** (Community Edition)
-- **IntelliJ IDEA** (Ultimate or Community Edition)
-- **Git** (for version control)
-
-### IntelliJ IDEA Requirements
-
-#### Required SDKs:
-- **Java SDK 17+** (Oracle JDK, OpenJDK, or Amazon Corretto)
-- **Node.js 18+**
-
-#### Required Plugins:
-- **Spring Boot** (usually pre-installed in Ultimate)
-- **Gradle** (usually pre-installed)
-- **JavaScript and TypeScript** (usually pre-installed)
-- **Tailwind CSS** (recommended for better CSS support)
-- **MongoDB Plugin** (optional, for database management)
-
-#### Required IntelliJ Modules:
-- **Java Enterprise**
-- **Spring**
-- **Gradle**
-- **JavaScript and TypeScript**
-- **Database Tools and SQL** (for MongoDB support)
-- **Version Control Systems**
 
 ## 📁 Project Structure
 ```
 ist-durstig/
-├── backend/                          # Spring Boot Backend
-│   ├── build.gradle                  # Gradle Build File and backend sources
-│   └── src/main/java/com/istdurstig/ # Java source code
-├── frontend/                         # React + TypeScript Frontend
-│   ├── package.json                  # Frontend dependencies and scripts
-│   ├── src/                          # React application source code
-│   └── vite.config.ts, tailwind.config.js, etc.
-├── LICENSE                           # Project license
+├── backend/                          # Spring Boot backend
+│   ├── build.gradle                  # Gradle build file
+│   ├── gradlew, gradlew.bat          # Gradle wrapper scripts
+│   ├── settings.gradle               # Gradle settings
+│   └── src/
+│       ├── main/
+│       │   ├── java/
+│       │   │   └── istdurstig/
+│       │   │       ├── controller/   # REST API controllers
+│       │   │       ├── dto/          # Data Transfer Objects
+│       │   │       ├── factory/      # Entity factories
+│       │   │       ├── model/        # JPA entity models
+│       │   │       ├── repository/   # Spring Data repositories
+│       │   │       ├── security/     # Security configuration
+│       │   │       └── service/      # Business logic services
+│       │   └── resources/
+│       │       └── application.properties  # Spring Boot config
+│       └── test/                     # Unit and integration tests
+├── frontend/                         # React + TypeScript frontend
+│   ├── package.json                  # NPM dependencies & scripts
+│   ├── tsconfig.json                 # TypeScript compiler options
+│   ├── vite.config.ts                # Vite build config
+│   ├── tailwind.config.js            # Tailwind CSS settings
+│   ├── src/
+│   │   ├── components/               # Reusable UI components
+│   │   ├── contexts/                 # React Context providers (AuthContext)
+│   │   ├── pages/                    # Page-level views (Dashboard, Login, etc.)
+│   │   ├── services/                 # API client functions
+│   │   └── types/                    # TypeScript type definitions
+│   ├── index.html                    # HTML template
+│   └── main.tsx                      # Frontend entry point
+├── LICENSE                           # Project license file
 └── README.md                         # Project overview and instructions
 ```
 
@@ -109,44 +110,6 @@ npm run preview
 # Run linting
 npm run lint
 ```
-
-## 🔍 Troubleshooting
-
-### Common Issues and Solutions
-
-1. **MongoDB Connection Failed**
-   - Ensure MongoDB service is running
-   - Check connection string in `application.properties`
-   - Verify MongoDB is accessible on localhost:27017
-
-2. **Port Already in Use**
-   - Backend (8080): Change `server.port` in `application.properties`
-   - Frontend (5173): Vite will automatically try the next available port
-
-3. **Gradle Build Failed**
-   - Ensure Java 17+ is installed and configured
-   - Run `./gradlew clean build` to clean and rebuild
-
-4. **Frontend Dependencies Issues**
-   - Delete `node_modules` and `package-lock.json`
-   - Run `npm install` again
-
-5. **CORS Issues**
-   - Backend is configured to allow all origins in development
-   - For production, update CORS configuration in `WebSecurityConfig.java`
-
-## 🚀 Production Deployment
-
-### Backend Deployment
-1. Build the JAR file: `./gradlew bootJar`
-2. Deploy to your preferred cloud platform (AWS, Heroku, DigitalOcean)
-3. Configure production MongoDB instance
-4. Set environment variables for production
-
-### Frontend Deployment
-1. Build the production bundle: `npm run build`
-2. Deploy to Vercel, Netlify, or your preferred hosting platform
-3. Update API base URL for production backend
 
 ## 📚 API Documentation
 

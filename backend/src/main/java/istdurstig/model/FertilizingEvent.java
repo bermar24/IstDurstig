@@ -15,4 +15,9 @@ public class FertilizingEvent extends CareEvent {
         super(CareEventType.FERTILIZING, notes, userId);
         this.fertilizerType = fertilizerType;
     }
+    public String getSummary() {
+        return "Fertilized with: "
+                + fertilizerType + " on " + getTimestamp()
+                + ". Notes: " + getNotes();
+    }
 }

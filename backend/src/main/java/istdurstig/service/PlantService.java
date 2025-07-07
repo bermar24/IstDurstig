@@ -94,15 +94,32 @@ public class PlantService {
 
     public Plant addCareEvent(String plantId, CareEventRequest careEventRequest, String userId) {
         Plant plant = getPlantById(plantId, userId);
-        
-        Object[] params = extractCareEventParams(careEventRequest);
-        CareEvent careEvent = careEventFactory.createCareEvent(
-                careEventRequest.getType(), 
-                careEventRequest.getNotes(), 
-                userId, 
-                params
-        );
-        
+        CareEvent careEvent;
+        switch (careEventRequest.getType()) {
+            case WATERING:
+                Double amount = (Double) careEventRequest.getAdditionalData().get("amount");
+                careEvent = careEventFactory.createCareEvent(
+                    careEventRequest.getNotes(), userId, amount != null ? amount : 0.0
+                );
+                break;
+            case FERTILIZING:
+                String fertilizerType = (String) careEventRequest.getAdditionalData().get("fertilizerType");
+                careEvent = careEventFactory.createCareEvent(
+                    careEventRequest.getNotes(), userId, fertilizerType != null ? fertilizerType : ""
+                );
+                break;
+            case TRANSPLANTING:
+                String potSize = (String) careEventRequest.getAdditionalData().get("potSize");
+                String soilType = (String) careEventRequest.getAdditionalData().get("soilType");
+                careEvent = careEventFactory.createCareEvent(
+                    careEventRequest.getNotes(), userId,
+                    potSize != null ? potSize : "", soilType != null ? soilType : ""
+                );
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown care event type: " + careEventRequest.getType());
+        }
+
         plant.addCareEvent(careEvent);
         return plantRepository.save(plant);
     }
@@ -118,32 +135,5 @@ public class PlantService {
         List<PlantList> userLists = plantListRepository.findByOwnerIdOrCollaboratorIdsContaining(userId);
         return userLists.stream()
                 .anyMatch(list -> list.getPlantIds().contains(plantId));
-    }
-
-    private Object[] extractCareEventParams(CareEventRequest request) {
-        if (request.getAdditionalData() == null) {
-            return new Object[0];
-        }
-        
-        switch (request.getType()) {
-            case WATERING:
-                Double amount = (Double) request.getAdditionalData().get("amount");
-                return new Object[]{amount != null ? amount : 0.0};
-            
-            case FERTILIZING:
-                String fertilizerType = (String) request.getAdditionalData().get("fertilizerType");
-                return new Object[]{fertilizerType != null ? fertilizerType : ""};
-            
-            case TRANSPLANTING:
-                String potSize = (String) request.getAdditionalData().get("potSize");
-                String soilType = (String) request.getAdditionalData().get("soilType");
-                return new Object[]{
-                    potSize != null ? potSize : "",
-                    soilType != null ? soilType : ""
-                };
-            
-            default:
-                return new Object[0];
-        }
     }
 }

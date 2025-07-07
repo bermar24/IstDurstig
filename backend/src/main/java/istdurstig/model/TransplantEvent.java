@@ -17,4 +17,9 @@ public class TransplantEvent extends CareEvent {
         this.newPotSize = newPotSize;
         this.soilType = soilType;
     }
+    public String getSummary() {
+        return "Transpoted into:  "
+                + newPotSize + " size using " + soilType + " on " + getTimestamp()
+                + ". Notes: " + getNotes();
+    }
 }

@@ -1,5 +1,6 @@
 package istdurstig.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import istdurstig.model.enums.CareEventType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,8 @@ public abstract class CareEvent {
         this.notes = notes;
         this.userId = userId;
     }
+
+    @JsonProperty("summary")
+    public abstract String getSummary();
+
 }
