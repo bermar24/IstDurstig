@@ -3,6 +3,7 @@ package istdurstig.service;
 import istdurstig.dto.PlantRequest;
 import istdurstig.dto.CareEventRequest;
 import istdurstig.factory.CareEventFactory;
+import istdurstig.factory.PlantFactory;
 import istdurstig.model.Plant;
 import istdurstig.model.Schedule;
 import istdurstig.model.CareEvent;
@@ -27,6 +28,9 @@ public class PlantService {
     @Autowired
     private CareEventFactory careEventFactory;
 
+    @Autowired
+    private PlantFactory plantFactory;
+
     public List<Plant> getAllPlantsForUser(String userId) {
         List<PlantList> userLists = plantListRepository.findByOwnerIdOrCollaboratorIdsContaining(userId);
         List<String> plantIds = userLists.stream()
@@ -49,29 +53,13 @@ public class PlantService {
     }
 
     public Plant createPlant(PlantRequest plantRequest, String userId) {
-        Schedule schedule = new Schedule(plantRequest.getFrequency(), null);
-        Plant plant = new Plant(plantRequest.getName(), plantRequest.getType(), 
-                              plantRequest.getTags(), plantRequest.getNotes(), schedule);
-        plant.setPhotoUrl(plantRequest.getPhotoUrl());
-        
+        Plant plant = plantFactory.createPlant(plantRequest);
         return plantRepository.save(plant);
     }
 
     public Plant updatePlant(String plantId, PlantRequest plantRequest, String userId) {
         Plant plant = getPlantById(plantId, userId);
-        
-        plant.setName(plantRequest.getName());
-        plant.setType(plantRequest.getType());
-        plant.setTags(plantRequest.getTags());
-        plant.setNotes(plantRequest.getNotes());
-        plant.setPhotoUrl(plantRequest.getPhotoUrl());
-        
-        if (plant.getSchedule() != null) {
-            plant.getSchedule().setFrequency(plantRequest.getFrequency());
-        } else {
-            plant.setSchedule(new Schedule(plantRequest.getFrequency(), null));
-        }
-        
+        plantFactory.updatePlant(plant, plantRequest);
         return plantRepository.save(plant);
     }
 
