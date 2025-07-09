@@ -9,16 +9,15 @@ Plant care tracking application that helps users manage their plants with custom
 - **Care Tracking**: Log watering, fertilizing, and transplanting events with detailed history
 - **Daily Dashboard**: See which plants need attention today with beautiful statistics
 - **Shared Lists**: Collaborate with roommates or family members on plant care
-- **Search & Filter**: Quickly find plants by name, type, or tags
 - **Responsive Design**: Beautiful interface that works on all devices
-- **Secure Authentication**: JWT-based user authentication and authorization
+- **Secure Authentication**: JWT-based user authentication and authorization (In progress)
 
 ## 🏗️ Architecture
 
 ### Backend (Java Spring Boot)
 - **Framework**: Spring Boot 3.2.0 with Gradle
 - **Database**: MongoDB with Spring Data MongoDB
-- **Security**: Spring Security with JWT authentication
+- **Security**: Spring Security with JWT authentication (In progress)
 - **Architecture**: Clean Architecture with Repository-Service-Controller pattern
 - **Design Patterns**: Factory pattern for care events, rich domain models
 
@@ -117,8 +116,13 @@ npm run lint
 - `POST /api/auth/signin` - User login
 - `POST /api/auth/signup` - User registration
 
+### User Endpoints
+- `GET /api/users/search?email={email}` - Search for users by email
+- `GET /api/users/{id}` - Get user by ID
+
 ### Plant Management
 - `GET /api/plants` - Get all user plants
+- `GET /api/plants/{id}` - Get plant by ID
 - `POST /api/plants` - Create new plant
 - `PUT /api/plants/{id}` - Update plant
 - `DELETE /api/plants/{id}` - Delete plant
@@ -129,10 +133,14 @@ npm run lint
 
 ### Plant Lists
 - `GET /api/plant-lists` - Get all user plant lists
+- `GET /api/plant-lists/{id}` - Get plant list by ID
 - `POST /api/plant-lists` - Create new plant list
 - `PUT /api/plant-lists/{id}` - Update plant list
 - `DELETE /api/plant-lists/{id}` - Delete plant list
-
+- `POST /api/plant-lists/{id}/plants/{plantId}` - Add plant to list
+- `DELETE /api/plant-lists/{id}/plants/{plantId}` - Remove plant from list
+- `POST /api/plant-lists/{id}/share` - Share list with user
+- `DELETE /api/plant-lists/{id}/collaborators/{userId}` - Remove collaborator from list
 
 ## 📄 License
 
